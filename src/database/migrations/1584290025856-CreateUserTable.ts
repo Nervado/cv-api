@@ -8,7 +8,9 @@ export class CreateUserTable1584290025856 implements MigrationInterface {
     columns: [
       ...MigrationUtil.getIDColumn(),
       MigrationUtil.getVarCharColumn({ name: 'name' }),
+      MigrationUtil.getVarCharColumn({ name: 'surname' }),
       MigrationUtil.getVarCharColumn({ name: 'email' }),
+      MigrationUtil.getVarCharColumn({ name: 'ad' }),
     ],
   });
 

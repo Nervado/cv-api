@@ -33,6 +33,16 @@ class MigrationUtil {
       type: 'varchar',
     };
   }
+
+  public static getBoleanColumn({ name }): TableColumnOptions[] {
+    const columns: TableColumnOptions[] = [];
+    columns.push({
+      name,
+      type: 'Bolean',
+    });
+
+    return columns;
+  }
 }
 
 export default MigrationUtil;
