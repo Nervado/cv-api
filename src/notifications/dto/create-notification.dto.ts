@@ -5,5 +5,5 @@ export class CreateNotificationDto {
   name: string;
 
   @IsNotEmpty()
-  string: string;
+  type: string;
 }

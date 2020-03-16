@@ -9,12 +9,22 @@ import * as path from 'path';
 @Injectable()
 class ConfigService {
   private readonly envConfig: IEnvConfigInterface;
-
-  constructor(filePath: string) {
-    const config = dotenv.parse(fs.readFileSync(filePath));
+  // modification in the orginal code to have default path to .env files
+  constructor(filePath?: string) {
+    const _filePath = filePath
+      ? filePath
+      : `env/${process.env.NODE_ENV || 'development'}.env`;
+    const config = dotenv.parse(fs.readFileSync(_filePath));
     this.envConfig = this.validateInput(config);
   }
 
+  public getMongoConfig(): string {
+    return this.envConfig.MONGO_URL;
+  }
+
+  public getHttpPort(): string {
+    return this.envConfig.HTTP_PORT;
+  }
   public getTypeORMConfig(): TypeOrmModuleOptions {
     const baseDir = path.join(__dirname, '../');
     // const entitiesPath = `${baseDir}${this.envConfig.TYPEORM_ENTITIES}`;

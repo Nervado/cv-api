@@ -1,9 +1,9 @@
 import { Controller, Post, Get, Param, ParseIntPipe } from '@nestjs/common';
-
-// import { UsersService } from './users.service';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
   @Post()
   createUser(): string {
     return 'user created';
