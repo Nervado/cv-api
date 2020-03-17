@@ -1,12 +1,21 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  // OneToMany,
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'UserTable' })
-class UserEntity extends BaseEntity {
+@Unique(['email'])
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  userId: number;
 
   @Column()
-  name: string;
+  username: string;
 
   @Column()
   surname: string;
@@ -15,13 +24,19 @@ class UserEntity extends BaseEntity {
   cpf: string;
 
   @Column()
+  phonenumber: string;
+
+  @Column()
   email: string;
 
   @Column()
   street: string;
 
   @Column()
-  houseNumber: string;
+  housenumber: string;
+
+  @Column()
+  complement: string;
 
   @Column()
   neibehoord: string;
@@ -33,10 +48,25 @@ class UserEntity extends BaseEntity {
   uf: string;
 
   @Column()
+  cep: string;
+
+  @Column()
   admin: boolean;
 
   @Column()
-  isPro: boolean;
-}
+  ispro: boolean;
 
-export default UserEntity;
+  @Column()
+  password: string;
+
+  @Column()
+  salt: string;
+
+  //@OneToMany(type => Task, task => task.user, { eager: true })
+  //tasks: Task[];
+
+  async validatePassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+    return hash === this.password;
+  }
+}

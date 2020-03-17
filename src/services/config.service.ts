@@ -4,10 +4,11 @@ import * as Joi from '@hapi/joi';
 import { Injectable } from '@nestjs/common';
 import IEnvConfigInterface from '../config/env-config.interface';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { JwtConfig } from './interfaces/jwt.interface';
 import * as path from 'path';
 
 @Injectable()
-class ConfigService {
+export class ConfigService {
   private readonly envConfig: IEnvConfigInterface;
   // modification in the orginal code to have default path to .env files
   constructor(filePath?: string) {
@@ -18,6 +19,13 @@ class ConfigService {
     this.envConfig = this.validateInput(config);
   }
 
+  public getJwtConfig(): JwtConfig {
+    return {
+      expiresIn: this.envConfig.EXPIRES_IN,
+      secret: this.envConfig.APP_SECRET,
+    };
+  }
+
   public getMongoConfig(): string {
     return this.envConfig.MONGO_URL;
   }
@@ -25,6 +33,7 @@ class ConfigService {
   public getHttpPort(): string {
     return this.envConfig.HTTP_PORT;
   }
+
   public getTypeORMConfig(): TypeOrmModuleOptions {
     const baseDir = path.join(__dirname, '../');
     // const entitiesPath = `${baseDir}${this.envConfig.TYPEORM_ENTITIES}`;
@@ -69,5 +78,3 @@ class ConfigService {
     return validatedEnvConfig;
   }
 }
-
-export default ConfigService;
