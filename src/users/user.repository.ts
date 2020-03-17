@@ -5,7 +5,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { User } from '../users/user.entity';
+import { User } from './models/user.entity';
 import { AuthCredentialsDto } from '../auth/dto/auth-credentials.dto';
 import { AuthLoginCredentialsDto } from '../auth/dto/auth-login.dto';
 

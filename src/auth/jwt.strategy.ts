@@ -4,7 +4,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtPayload } from './jwt-payload.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../users/user.repository';
-import { User } from '../users/user.entity';
+import { User } from '../users/models/user.entity';
 // import * as config from 'config';
 import { ConfigService } from '../services/config.service';
 // import * as config from 'config';
