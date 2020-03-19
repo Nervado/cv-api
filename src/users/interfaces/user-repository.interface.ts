@@ -1,10 +1,10 @@
 import { Repository } from '../../util/base-interface';
 import { User } from '../models/user.entity';
 
-export interface UserRepository extends Repository<User, number> {
+export interface UserRepositoryInterface extends Repository<User, number> {
   index(): Array<User>;
-  geUserById(id: number): User;
-  create(entity: User): User;
-  update(entity: User): User;
-  delete(entity: User): User;
+  getById(id: number): User;
+  createOne(entity: User): User;
+  updateOne(entity: User): User;
+  deleteOne(entity: User): User;
 }

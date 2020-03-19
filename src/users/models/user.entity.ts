@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Unique,
+  OneToOne,
   // OneToMany,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
+
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'UserTable' })
@@ -56,9 +59,11 @@ export class User extends BaseEntity {
   @Column()
   ispro: boolean;
 
+  @Exclude()
   @Column()
   password: string;
 
+  @Exclude()
   @Column()
   salt: string;
 

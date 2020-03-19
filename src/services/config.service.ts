@@ -19,6 +19,9 @@ export class ConfigService {
     this.envConfig = this.validateInput(config);
   }
 
+  public getOrigin(): string {
+    return this.envConfig.APP_URL;
+  }
   public getJwtConfig(): JwtConfig {
     return {
       expiresIn: this.envConfig.EXPIRES_IN,
@@ -78,3 +81,5 @@ export class ConfigService {
     return validatedEnvConfig;
   }
 }
+
+export const configService = new ConfigService();

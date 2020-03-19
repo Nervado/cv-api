@@ -6,18 +6,14 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from './models/user.entity';
-import { AuthCredentialsDto } from '../auth/dto/auth-credentials.dto';
+import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
 import { AuthLoginCredentialsDto } from '../auth/dto/auth-login.dto';
+import { PageFilterDto } from './dto/page-filter.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const {
-      email,
-      password,
-      username,
-      passwordConfirmation,
-    } = authCredentialsDto;
+  async signUp(authSingUpDto: AuthSingUpDto): Promise<void> {
+    const { email, password, username, passwordConfirmation } = authSingUpDto;
 
     if (!(passwordConfirmation && passwordConfirmation === password)) {
       throw new BadRequestException('Passwords dont match');
@@ -35,6 +31,7 @@ export class UserRepository extends Repository<User> {
       await user.save();
     } catch (error) {
       if (error.code === '23505') {
+        // duplicate username
         throw new ConflictException('User already exists');
       } else {
         console.log(error);
@@ -45,12 +42,12 @@ export class UserRepository extends Repository<User> {
 
   async validateUserPassword(
     authLoginCredentialsDto?: AuthLoginCredentialsDto,
-  ): Promise<number> {
+  ): Promise<User> {
     const { email, password } = authLoginCredentialsDto;
     const user = await this.findOne({ email });
 
     if (user && (await user.validatePassword(password))) {
-      return user.userId;
+      return user;
     } else {
       return null;
     }
@@ -58,5 +55,16 @@ export class UserRepository extends Repository<User> {
 
   private async hashPassword(password: string, salt: string): Promise<string> {
     return bcrypt.hash(password, salt);
+  }
+
+  async index(pageFilterDto: PageFilterDto): Promise<User[]> {
+    console.log(pageFilterDto.page);
+    const pageNumber: number = pageFilterDto.page * 5 - 5;
+    const users = await this.createQueryBuilder('user')
+      .skip(pageNumber)
+      .take(5)
+      .getMany();
+
+    return users;
   }
 }

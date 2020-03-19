@@ -1,21 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PageFilterDto } from './dto/page-filter.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserRepository) private userRepository: UserRepository,
   ) {}
-  async create(createUserDto: { name: string }) {
-    return createUserDto;
+
+  async index(pageFilterDto: PageFilterDto) {
+    return this.userRepository.index(pageFilterDto);
   }
 
-  async delete(userId: number) {
-    return userId;
-  }
-
-  async getAll() {
-    return;
+  get(id) {
+    return this.userRepository.findOne(id);
   }
 }

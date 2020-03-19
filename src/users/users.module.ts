@@ -9,9 +9,4 @@ import { UserRepository } from './user.repository';
   controllers: [UsersController],
   providers: [UsersService],
 })
-export class UsersModule {
-  constructor(private readonly userService: UsersService) {}
-  createUser() {
-    return 'usuário criado';
-  }
-}
+export class UsersModule {}
