@@ -25,6 +25,9 @@ export class Avatar extends BaseEntity {
   @Column()
   path: string;
 
+  @Column()
+  userId: number;
+
   //@OneToMany(type => Task, task => task.user, { eager: true })
   //tasks: Task[];
 }

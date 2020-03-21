@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 const baseDir = path.join(__dirname, '../');
-// const entitiesPath = `${baseDir}${process.env.TYPEORM_ENTITIES}`;
+const entitiesPath = `${baseDir}${process.env.TYPEORM_ENTITIES}`;
 const migrationPath = `${baseDir}${process.env.TYPEORM_MIGRATIONS}`;
 
 export default {
@@ -13,9 +13,11 @@ export default {
   port: Number.parseInt(process.env.TYPEORM_PORT, 10),
   migrations: [migrationPath],
   migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN === 'true',
-  seeds: [`src/db/seeds/*.seed.ts`],
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  seeds: [`src/database/seeds/*.seed.ts`],
+  entities: [entitiesPath],
   cli: {
-    migrationsDir: 'src/database/migrations',
+    migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
+    entitiesDir: process.env.TYPEORM_ENTITIES_DIR,
   },
+  synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
 };

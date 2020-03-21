@@ -39,7 +39,7 @@ export class ConfigService {
 
   public getTypeORMConfig(): TypeOrmModuleOptions {
     const baseDir = path.join(__dirname, '../');
-    // const entitiesPath = `${baseDir}${this.envConfig.TYPEORM_ENTITIES}`;
+    const entitiesPath = `${baseDir}${this.envConfig.TYPEORM_ENTITIES}`;
     const migrationPath = `${baseDir}${this.envConfig.TYPEORM_MIGRATIONS}`;
     const type: any = this.envConfig.TYPEORM_CONNECTION;
     return {
@@ -50,13 +50,14 @@ export class ConfigService {
       database: this.envConfig.TYPEORM_DATABASE,
       port: Number.parseInt(this.envConfig.TYPEORM_PORT, 10),
       logging: false,
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [entitiesPath],
       migrations: [migrationPath],
       migrationsRun: this.envConfig.TYPEORM_MIGRATIONS_RUN === 'true',
       cli: {
-        migrationsDir: 'src/database/migrations',
-        // entitiesDir: 'src/db/entities',
+        migrationsDir: this.envConfig.TYPEORM_MIGRATIONS_DIR,
+        entitiesDir: this.envConfig.TYPEORM_ENTITIES_DIR,
       },
+      synchronize: this.envConfig.TYPEORM_SYNCHRONIZE === 'true',
     };
   }
 

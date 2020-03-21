@@ -34,14 +34,32 @@ class MigrationUtil {
     };
   }
 
-  public static getBoleanColumn({ name }): TableColumnOptions[] {
-    const columns: TableColumnOptions[] = [];
-    columns.push({
+  public static getBoleanColumn({
+    name,
+    type = 'bool',
+    isNullable = true,
+    isUnique = false,
+  }): TableColumnOptions {
+    return {
       name,
-      type: 'Bolean',
-    });
+      type,
+      isUnique,
+      isNullable,
+    };
+  }
 
-    return columns;
+  public static getUUidColumn({
+    name,
+    type = 'uuid',
+    isNullable = true,
+    isUnique = true,
+  }): TableColumnOptions {
+    return {
+      name,
+      type,
+      isNullable,
+      isUnique,
+    };
   }
 }
 

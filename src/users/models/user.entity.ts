@@ -5,14 +5,16 @@ import {
   Column,
   Unique,
   OneToOne,
-  // OneToMany,
+  JoinColumn,
 } from 'typeorm';
+
+import { Avatar } from '../../avatars/models/avatar.entity';
 import { Exclude } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'UserTable' })
-@Unique(['email'])
+@Unique(['email', 'cpf', 'phonenumber'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   userId: number;
@@ -20,37 +22,37 @@ export class User extends BaseEntity {
   @Column()
   username: string;
 
-  @Column()
+  @Column({ nullable: true })
   surname: string;
 
-  @Column()
+  @Column({ nullable: true })
   cpf: string;
 
-  @Column()
+  @Column({ nullable: true })
   phonenumber: string;
 
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   street: string;
 
-  @Column()
+  @Column({ nullable: true })
   housenumber: string;
 
-  @Column()
+  @Column({ nullable: true })
   complement: string;
 
-  @Column()
+  @Column({ nullable: true })
   neibehoord: string;
 
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
-  @Column()
+  @Column({ nullable: true })
   uf: string;
 
-  @Column()
+  @Column({ nullable: true })
   cep: string;
 
   @Column()
@@ -67,8 +69,9 @@ export class User extends BaseEntity {
   @Column()
   salt: string;
 
-  //@OneToMany(type => Task, task => task.user, { eager: true })
-  //tasks: Task[];
+  @OneToOne(() => Avatar)
+  @JoinColumn()
+  avatar: Avatar;
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);
