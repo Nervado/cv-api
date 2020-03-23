@@ -20,9 +20,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload): Promise<boolean> {
     const { user } = payload;
+
     if (!user) {
-      console.log('aqui');
-      //return false;
       throw new UnauthorizedException('Corrupted credentials!');
     }
     const { email } = user;
@@ -30,10 +29,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user_ = await this.userRepository.findOne({ where: { email } });
 
     if (!user_ || email !== user_.email) {
-      //return false;
       throw new UnauthorizedException('Invalid credentials!');
     } else {
-      console.log('Payload checked!');
       return true;
     }
   }

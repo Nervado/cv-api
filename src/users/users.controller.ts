@@ -11,7 +11,6 @@ import {
   Put,
   Body,
   UseGuards,
-  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PageFilterDto } from './dto/page-filter.dto';

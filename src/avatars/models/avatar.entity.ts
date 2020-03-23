@@ -1,5 +1,12 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  AfterLoad,
+} from 'typeorm';
 import { configService } from 'src/services/config.service';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'AvatarTable' })
 export class Avatar extends BaseEntity {
@@ -9,10 +16,14 @@ export class Avatar extends BaseEntity {
   @Column()
   filename: string;
 
+  @Exclude()
   @Column()
   path: string;
 
-  getUrl(): string {
-    return `${configService.getServerUrl()}/avatars/${this.filename}`;
+  url: string;
+
+  @AfterLoad()
+  setComputed() {
+    this.url = `${configService.getServerUrl()}/avatars/${this.filename}`;
   }
 }

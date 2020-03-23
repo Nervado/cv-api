@@ -20,6 +20,7 @@ export class UsersService {
   }
 
   async update(id: number, userUpdateDto: UserUpdateDto): Promise<User> {
+    // TODO ... check if avatar exists
     return this.userRepository.updateOne(id, userUpdateDto);
   }
 }

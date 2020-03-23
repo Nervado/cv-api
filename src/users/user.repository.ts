@@ -76,8 +76,8 @@ export class UserRepository extends Repository<User> {
 
   async updateOne(id: number, updateUserDto: UserUpdateDto): Promise<User> {
     const user = await this.findOne(id);
+    // To Do .. file put clear old file taks on queue
     this.merge(user, updateUserDto);
-    const results = await this.save(user);
-    return results;
+    return await this.save(user);
   }
 }
