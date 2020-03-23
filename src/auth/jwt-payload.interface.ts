@@ -1,3 +1,5 @@
+import { User } from 'src/users/models/user.entity';
+
 export interface JwtPayload {
-  userId: number;
+  user: User;
 }

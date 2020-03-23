@@ -8,11 +8,20 @@ import {
   Logger,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Put,
+  Body,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { User } from './models/user.entity';
+import { UserUpdateDto } from './dto/user-update.dto';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { AuthGuard } from '../auth/auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
 
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   private logger = new Logger('UsersController');
@@ -30,7 +39,17 @@ export class UsersController {
 
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
-  getUser(@Param('id', ParseIntPipe) id: number) {
+  getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
+    console.log(`User ${user.email} attempt to get profile data...`);
     return this.usersService.get(id);
+  }
+
+  @Put('/:id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UserUpdateDto,
+  ): Promise<User> {
+    return this.usersService.update(id, body);
   }
 }

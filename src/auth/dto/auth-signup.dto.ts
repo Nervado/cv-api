@@ -30,4 +30,10 @@ export class AuthSingUpDto {
     message: 'password dont match',
   })
   passwordConfirmation: string;
+
+  avatar?: {
+    avatarId: string;
+    url: string;
+    path: string;
+  };
 }

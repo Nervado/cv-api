@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageFilterDto } from './dto/page-filter.dto';
+import { UserUpdateDto } from './dto/user-update.dto';
+import { User } from './models/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -15,5 +17,9 @@ export class UsersService {
 
   get(id) {
     return this.userRepository.findOne(id);
+  }
+
+  async update(id: number, userUpdateDto: UserUpdateDto): Promise<User> {
+    return this.userRepository.updateOne(id, userUpdateDto);
   }
 }

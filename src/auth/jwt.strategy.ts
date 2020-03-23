@@ -4,12 +4,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtPayload } from './jwt-payload.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../users/user.repository';
-import { User } from '../users/models/user.entity';
-// import * as config from 'config';
-import { ConfigService } from '../services/config.service';
-// import * as config from 'config';
-
-const jwtConfig = new ConfigService().getJwtConfig();
+import { configService } from '../services/config.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,18 +14,27 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtConfig.secret,
+      secretOrKey: configService.getJwtConfig().secret,
     });
   }
 
-  async validate(payload: JwtPayload): Promise<User> {
-    const { userId } = payload;
-    const user = await User.findOne({ userId });
-
+  async validate(payload: JwtPayload): Promise<boolean> {
+    const { user } = payload;
     if (!user) {
-      throw new UnauthorizedException();
+      console.log('aqui');
+      //return false;
+      throw new UnauthorizedException('Corrupted credentials!');
     }
+    const { email } = user;
 
-    return user;
+    const user_ = await this.userRepository.findOne({ where: { email } });
+
+    if (!user_ || email !== user_.email) {
+      //return false;
+      throw new UnauthorizedException('Invalid credentials!');
+    } else {
+      console.log('Payload checked!');
+      return true;
+    }
   }
 }

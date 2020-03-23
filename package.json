@@ -26,8 +26,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@akanass/nestjsx-crypto": "^1.0.0",
     "@hapi/joi": "^17.1.1",
-    "@nestjs/common": "^7.0.0",
+    "@nestjs/common": "^7.0.3",
     "@nestjs/core": "^7.0.0",
     "@nestjs/jwt": "^7.0.0",
     "@nestjs/mongoose": "^6.4.0",

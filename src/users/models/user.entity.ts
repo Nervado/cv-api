@@ -14,7 +14,9 @@ import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'UserTable' })
-@Unique(['email', 'cpf', 'phonenumber'])
+@Unique(['email'])
+@Unique(['cpf'])
+@Unique(['phonenumber'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   userId: number;
@@ -69,7 +71,7 @@ export class User extends BaseEntity {
   @Column()
   salt: string;
 
-  @OneToOne(() => Avatar)
+  @OneToOne(() => Avatar, { eager: true })
   @JoinColumn()
   avatar: Avatar;
 

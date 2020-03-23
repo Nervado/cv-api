@@ -34,7 +34,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload: JwtPayload = { userId };
+    const payload: JwtPayload = { user };
     const accessToken = await this.jwtService.sign(payload);
     this.logger.debug(
       `Generated JWT Token with payload ${JSON.stringify(payload)}`,
@@ -46,5 +46,9 @@ export class AuthService {
     authCredentailsDto.user = user;
 
     return authCredentailsDto;
+  }
+
+  async validateToken(token: string): Promise<any> {
+    return this.jwtService.decode(token);
   }
 }

@@ -19,13 +19,26 @@ export class ConfigService {
     this.envConfig = this.validateInput(config);
   }
 
+  public getServerUrl(): string {
+    return this.envConfig.SERVER_URL;
+  }
+  public getAvatarsPath(): string {
+    const baseDir = path.join(__dirname, '../../');
+    const _path = `${baseDir}${this.envConfig.AVATARS_DIR}`;
+    return _path;
+  }
   public getOrigin(): string {
     return this.envConfig.APP_URL;
   }
   public getJwtConfig(): JwtConfig {
+    const expiresIn = this.envConfig.EXPIRES_IN;
+    const secret = this.envConfig.APP_SECRET;
+    console.log(expiresIn, secret);
     return {
-      expiresIn: this.envConfig.EXPIRES_IN,
-      secret: this.envConfig.APP_SECRET,
+      secret: secret,
+      signOptions: {
+        expiresIn: expiresIn,
+      },
     };
   }
 

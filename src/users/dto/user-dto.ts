@@ -1,5 +1,7 @@
+// import { Avatar } from 'src/avatars/models/avatar.entity';
+
 export class UserDto {
-  userId: number;
+  userId?: number;
   username: string;
   surname: string;
   street: string;

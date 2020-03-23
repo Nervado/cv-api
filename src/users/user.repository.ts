@@ -9,6 +9,7 @@ import { User } from './models/user.entity';
 import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
 import { AuthLoginCredentialsDto } from '../auth/dto/auth-login.dto';
 import { PageFilterDto } from './dto/page-filter.dto';
+import { UserUpdateDto } from './dto/user-update.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -24,6 +25,7 @@ export class UserRepository extends Repository<User> {
     user.email = email;
     user.ispro = false;
     user.admin = false;
+
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
 
@@ -31,7 +33,6 @@ export class UserRepository extends Repository<User> {
       await user.save();
     } catch (error) {
       if (error.code === '23505') {
-        // duplicate username
         throw new ConflictException('User already exists');
       } else {
         console.log(error);
@@ -41,10 +42,14 @@ export class UserRepository extends Repository<User> {
   }
 
   async validateUserPassword(
-    authLoginCredentialsDto?: AuthLoginCredentialsDto,
+    authLoginCredentialsDto: AuthLoginCredentialsDto,
   ): Promise<User> {
+    console.log(authLoginCredentialsDto);
     const { email, password } = authLoginCredentialsDto;
-    const user = await this.findOne({ email });
+
+    const user = await this.findOne({
+      where: { email },
+    });
 
     if (user && (await user.validatePassword(password))) {
       return user;
@@ -61,10 +66,18 @@ export class UserRepository extends Repository<User> {
     console.log(pageFilterDto.page);
     const pageNumber: number = pageFilterDto.page * 5 - 5;
     const users = await this.createQueryBuilder('user')
+      .leftJoinAndSelect('user.avatar', 'avatar')
       .skip(pageNumber)
       .take(5)
       .getMany();
 
     return users;
+  }
+
+  async updateOne(id: number, updateUserDto: UserUpdateDto): Promise<User> {
+    const user = await this.findOne(id);
+    this.merge(user, updateUserDto);
+    const results = await this.save(user);
+    return results;
   }
 }
