@@ -7,8 +7,8 @@ export class AvatarsService {
   constructor(private readonly avatarsRepo: AvatarRepository) {}
 
   async create(avatarDto: AvatarDto): Promise<AvatarDto> {
-    console.log(avatarDto);
-    return this.avatarsRepo.createOne(avatarDto);
+    const avatar = await this.avatarsRepo.createOne(avatarDto);
+    return avatar;
   }
 
   async update(avatarDto: AvatarDto, id?: number): Promise<AvatarDto> {

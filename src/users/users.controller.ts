@@ -17,8 +17,10 @@ import { PageFilterDto } from './dto/page-filter.dto';
 import { User } from './models/user.entity';
 import { UserUpdateDto } from './dto/user-update.dto';
 import { GetUser } from 'src/auth/get-user.decorator';
+//import { AuthGuard } from '@nestjs/passport';
+
 import { AuthGuard } from '../auth/auth.guard';
-import { RolesGuard } from '../auth/roles.guard';
+// import { RolesGuard } from '../auth/roles.guard';
 
 @UseGuards(AuthGuard)
 @Controller('users')

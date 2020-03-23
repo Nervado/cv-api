@@ -33,7 +33,7 @@ export class ConfigService {
   public getJwtConfig(): JwtConfig {
     const expiresIn = this.envConfig.EXPIRES_IN;
     const secret = this.envConfig.APP_SECRET;
-    console.log(expiresIn, secret);
+
     return {
       secret: secret,
       signOptions: {

@@ -8,6 +8,7 @@ import {
   Res,
   Put,
   Body,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 
 import { diskStorage } from 'multer';
@@ -27,6 +28,7 @@ export class AvatarsController {
   ) {}
 
   @Post()
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: diskStorage({
@@ -43,10 +45,12 @@ export class AvatarsController {
   }
 
   @Get(':avatarpath')
+  @UseInterceptors(ClassSerializerInterceptor)
   dowloadAvatar(@Param('avatarpath') image, @Res() res) {
     return res.sendFile(image, { root: 'uploads/avatars' });
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Put('/:id')
   update(@Param('id') id, @Body() body: AvatarDto) {
     return this.avatarService.update(body, id);
