@@ -1,46 +1,48 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  Logger,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from '../users/user.repository';
 import { AuthSingUpDto } from './dto/auth-signup.dto';
-import { AuthLoginCredentialsDto } from './dto/auth-login.dto';
+import { LoginDto } from './dto/auth-login.dto';
 import { JwtPayload } from './jwt-payload.interface';
-import { AuthCredentailsDto } from './dto/auth-credentials';
+import { CredentailsDto } from './dto/auth-credentials.dto';
+
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   private logger = new Logger('AuthService');
 
   constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
+    private userService: UsersService,
     private jwtService: JwtService,
   ) {}
-
   async signUp(authSingUpDto: AuthSingUpDto): Promise<void> {
-    return this.userRepository.signUp(authSingUpDto);
+    return this.userService.signUp(authSingUpDto);
   }
 
-  async signIn(
-    authLoginCredentialsDto: AuthLoginCredentialsDto,
-  ): Promise<AuthCredentailsDto> {
-    const user = await this.userRepository.validateUserPassword(
-      authLoginCredentialsDto,
-    );
+  async signIn(loginDto: LoginDto): Promise<CredentailsDto> {
+    const user = await this.userService.validateUser(loginDto);
 
-    const { userId } = user;
+    const { username, userId } = user;
 
-    if (!userId) {
+    if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload: JwtPayload = { user };
+    const payload: JwtPayload = { username, userId };
+
     const accessToken = await this.jwtService.sign(payload);
+
     this.logger.debug(
       `Generated JWT Token with payload ${JSON.stringify(payload)}`,
     );
 
-    const authCredentailsDto = new AuthCredentailsDto();
+    const authCredentailsDto = new CredentailsDto();
 
     authCredentailsDto.token = accessToken;
     authCredentailsDto.user = user;
@@ -50,5 +52,9 @@ export class AuthService {
 
   async validateToken(token: string): Promise<any> {
     return this.jwtService.decode(token);
+  }
+
+  async validateUser(incomingData: any): Promise<any> {
+    return this.userService.validateUser(incomingData);
   }
 }

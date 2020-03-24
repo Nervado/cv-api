@@ -11,18 +11,20 @@ import {
   Put,
   Body,
   UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { User } from './models/user.entity';
 import { UserUpdateDto } from './dto/user-update.dto';
 import { GetUser } from 'src/auth/get-user.decorator';
-//import { AuthGuard } from '@nestjs/passport';
 
-import { AuthGuard } from '../auth/auth.guard';
+//import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+
+//import { AuthGuard } from '../auth/auth.guard';
 // import { RolesGuard } from '../auth/roles.guard';
 
-@UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   private logger = new Logger('UsersController');
@@ -38,10 +40,11 @@ export class UsersController {
     return this.usersService.index(pageFilterDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
   getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
-    console.log(`User ${user.email} attempt to get profile data...`);
+    console.log(`User ${user.userId} attempt to get profile data...`);
     return this.usersService.get(id);
   }
 

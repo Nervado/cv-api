@@ -1,5 +1,7 @@
-import { User } from 'src/users/models/user.entity';
+// import { User } from 'src/users/models/user.entity';
 
-export interface JwtPayload {
-  user: User;
+export class JwtPayload {
+  userId?: number;
+  username?: string;
+  // email?: string;
 }

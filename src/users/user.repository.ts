@@ -7,7 +7,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { User } from './models/user.entity';
 import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
-import { AuthLoginCredentialsDto } from '../auth/dto/auth-login.dto';
+import { LoginDto } from '../auth/dto/auth-login.dto';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
 
@@ -41,21 +41,21 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async validateUserPassword(
-    authLoginCredentialsDto: AuthLoginCredentialsDto,
-  ): Promise<User> {
-    console.log(authLoginCredentialsDto);
-    const { email, password } = authLoginCredentialsDto;
+  async validateUser(loginDto: LoginDto): Promise<any> {
+    const { username, password } = loginDto;
+    console.log(loginDto, 'Dados buscados');
 
     const user = await this.findOne({
-      where: { email },
+      where: { email: username },
     });
 
-    if (user && (await user.validatePassword(password))) {
+    console.log('deu ruim mano ahsahs', loginDto);
+
+    if (user && user.validatePassword(password)) {
       return user;
-    } else {
-      return null;
     }
+
+    return null;
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {

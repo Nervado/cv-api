@@ -29,7 +29,7 @@ export class AuthSingUpDto {
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'password dont match',
   })
-  passwordConfirmation: string;
+  passwordConfirmation?: string;
 
   avatar?: {
     avatarId: string;

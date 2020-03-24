@@ -1,6 +1,6 @@
 import { UserDto } from '../../users/dto/user-dto';
 
-export class AuthCredentailsDto {
+export class CredentailsDto {
   user: UserDto;
   token: string;
 }
