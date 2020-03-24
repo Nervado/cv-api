@@ -6,14 +6,13 @@ import {
   Get,
   Param,
   Res,
-  Put,
-  Body,
   ClassSerializerInterceptor,
+  Delete,
 } from '@nestjs/common';
 
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UsersService } from '../users/users.service';
+
 import { configService } from '../services/config.service';
 import { cryptoService } from '../crypto/crypto.service';
 import { AvatarsService } from './avatars.service';
@@ -21,10 +20,7 @@ import { AvatarDto } from './dto/avatar.dto';
 
 @Controller('avatars')
 export class AvatarsController {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly avatarService: AvatarsService,
-  ) {}
+  constructor(private readonly avatarService: AvatarsService) {}
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
@@ -46,12 +42,13 @@ export class AvatarsController {
   @Get(':avatarpath')
   @UseInterceptors(ClassSerializerInterceptor)
   dowloadAvatar(@Param('avatarpath') image, @Res() res) {
-    return res.sendFile(image, { root: 'uploads/avatars' });
+    this.avatarService.check(image, res);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put('/:id')
-  update(@Param('id') id, @Body() body: AvatarDto) {
-    return this.avatarService.update(body, id);
+  @Delete('/:id')
+  delete(@Param('id') id) {
+    console.log('Deleting... avatar id', id);
+    return this.avatarService.delete(id);
   }
 }

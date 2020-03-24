@@ -24,6 +24,7 @@ export class Avatar extends BaseEntity {
   url: string;
 
   @BeforeInsert()
+  @AfterLoad()
   setComputed() {
     this.url = `${configService.getServerUrl()}/avatars/${this.filename}`;
   }

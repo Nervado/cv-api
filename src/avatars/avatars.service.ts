@@ -10,16 +10,14 @@ export class AvatarsService {
     return this.avatarsRepo.createOne(avatarDto);
   }
 
-  async update(avatarDto: AvatarDto, id?: number): Promise<AvatarDto> {
-    const find = await this.avatarsRepo.findOne(id);
-    if (!find) {
-      find.filename = avatarDto.filename;
-      // To Do .. file put clear old file taks on queue
-      find.path = avatarDto.path;
+  async delete(id: number): Promise<any> {
+    return this.avatarsRepo.delete({ avatarId: id });
+  }
 
-      console.log('Atualizando novo avatar...');
-      return await find.save();
-    }
-    return await this.avatarsRepo.createOne(avatarDto);
+  async check(filename: string, res): Promise<any> {
+    return this.avatarsRepo
+      .check(filename)
+      .then(() => res.sendFile(filename, { root: 'uploads/avatars' }))
+      .catch(() => res.status(404).json({ error: 'File not found' }));
   }
 }
