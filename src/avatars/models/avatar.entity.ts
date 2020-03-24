@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   AfterLoad,
+  BeforeInsert,
 } from 'typeorm';
 import { configService } from 'src/services/config.service';
 import { Exclude } from 'class-transformer';
@@ -22,7 +23,7 @@ export class Avatar extends BaseEntity {
 
   url: string;
 
-  @AfterLoad()
+  @BeforeInsert()
   setComputed() {
     this.url = `${configService.getServerUrl()}/avatars/${this.filename}`;
   }

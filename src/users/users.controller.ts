@@ -44,7 +44,7 @@ export class UsersController {
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
   getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
-    console.log(`User ${user.userId} attempt to get profile data...`);
+    this.logger.verbose(`User ${user.userId} attempt to get profile data...`);
     return this.usersService.get(id);
   }
 

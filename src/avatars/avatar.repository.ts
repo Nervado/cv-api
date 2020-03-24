@@ -6,6 +6,8 @@ import { AvatarDto } from './dto/avatar.dto';
 @EntityRepository(Avatar)
 export class AvatarRepository extends Repository<Avatar> {
   async createOne(avatarDto: AvatarDto): Promise<AvatarDto> {
-    return await this.create(avatarDto);
+    const avatar = new Avatar();
+    this.merge(avatar, avatarDto);
+    return avatar.save();
   }
 }

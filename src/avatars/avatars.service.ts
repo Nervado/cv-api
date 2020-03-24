@@ -4,11 +4,10 @@ import { AvatarDto } from './dto/avatar.dto';
 
 @Injectable()
 export class AvatarsService {
-  constructor(private readonly avatarsRepo: AvatarRepository) {}
+  constructor(private avatarsRepo: AvatarRepository) {}
 
   async create(avatarDto: AvatarDto): Promise<AvatarDto> {
-    const avatar = await this.avatarsRepo.createOne(avatarDto);
-    return avatar;
+    return this.avatarsRepo.createOne(avatarDto);
   }
 
   async update(avatarDto: AvatarDto, id?: number): Promise<AvatarDto> {

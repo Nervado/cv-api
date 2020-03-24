@@ -3,4 +3,6 @@ export class AvatarDto {
   url?: string;
   path?: string;
   filename?: string;
+  teste?: string;
+  msg?: string;
 }
