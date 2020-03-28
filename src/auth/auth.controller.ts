@@ -4,26 +4,29 @@ import {
   Body,
   ValidationPipe,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { AuthSingUpDto } from './dto/auth-signup.dto';
 import { AuthService } from './auth.service';
-
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/auth-login.dto';
 import { CredentailsDto } from './dto/auth-credentials.dto';
+import { UserDto } from 'src/users/dto/user-dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/signup')
-  signUp(@Body(ValidationPipe) authSingUpDto: AuthSingUpDto): Promise<void> {
+  @UseInterceptors(ClassSerializerInterceptor)
+  signUp(@Body(ValidationPipe) authSingUpDto: AuthSingUpDto): Promise<UserDto> {
     return this.authService.signUp(authSingUpDto);
   }
 
-  //@Roles('admin')
-  @UseGuards(AuthGuard('local'))
   @Post('/signin')
+  @UseGuards(AuthGuard('local'))
+  @UseInterceptors(ClassSerializerInterceptor)
   signIn(@Body(ValidationPipe) loginDto: LoginDto): Promise<CredentailsDto> {
     return this.authService.signIn(loginDto);
   }

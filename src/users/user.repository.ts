@@ -10,10 +10,11 @@ import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
 import { LoginDto } from '../auth/dto/auth-login.dto';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
+import { UserDto } from './dto/user-dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authSingUpDto: AuthSingUpDto): Promise<void> {
+  async signUp(authSingUpDto: AuthSingUpDto): Promise<UserDto> {
     const { email, password, username, passwordConfirmation } = authSingUpDto;
 
     if (!(passwordConfirmation && passwordConfirmation === password)) {
@@ -30,13 +31,12 @@ export class UserRepository extends Repository<User> {
     user.password = await this.hashPassword(password, user.salt);
 
     try {
-      await user.save();
+      return await user.save();
     } catch (error) {
       if (error.code === '23505') {
         throw new ConflictException('User already exists');
       } else {
-        console.log(error);
-        throw new InternalServerErrorException();
+        throw new InternalServerErrorException('Uknow error!');
       }
     }
   }

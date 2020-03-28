@@ -10,7 +10,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { AuthModule } from './auth/auth.module';
 import { AvatarsModule } from './avatars/avatars.module';
 import { SchedulesModule } from './schedules/schedules.module';
-import { QueueModule } from './queue/queue.module';
+import { EmailsModule } from './emails/emails.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { QueueModule } from './queue/queue.module';
     AuthModule,
     AvatarsModule,
     SchedulesModule,
-    QueueModule,
+    EmailsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,6 +6,7 @@ import { JwtPayload } from './jwt-payload.interface';
 import { CredentailsDto } from './dto/auth-credentials.dto';
 
 import { UsersService } from '../users/users.service';
+import { UserDto } from 'src/users/dto/user-dto';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     private userService: UsersService,
     private jwtService: JwtService,
   ) {}
-  async signUp(authSingUpDto: AuthSingUpDto): Promise<void> {
+  async signUp(authSingUpDto: AuthSingUpDto): Promise<UserDto> {
     return this.userService.signUp(authSingUpDto);
   }
 

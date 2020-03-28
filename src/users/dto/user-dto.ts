@@ -1,5 +1,3 @@
-// import { Avatar } from 'src/avatars/models/avatar.entity';
-
 export class UserDto {
   userId?: number;
   username: string;
@@ -16,4 +14,5 @@ export class UserDto {
   cep: string;
   admin: boolean;
   ispro: boolean;
+  fullname: string;
 }
