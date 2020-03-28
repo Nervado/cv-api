@@ -13,7 +13,7 @@ import {
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { configService } from '../services/config.service';
+import { configService } from '../config/config.service';
 import { cryptoService } from '../crypto/crypto.service';
 import { AvatarsService } from './avatars.service';
 import { AvatarDto } from './dto/avatar.dto';

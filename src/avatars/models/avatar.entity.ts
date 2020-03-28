@@ -6,7 +6,7 @@ import {
   AfterLoad,
   BeforeInsert,
 } from 'typeorm';
-import { configService } from 'src/services/config.service';
+import { configService } from 'src/config/config.service';
 import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'AvatarTable' })

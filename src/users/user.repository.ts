@@ -63,7 +63,6 @@ export class UserRepository extends Repository<User> {
   }
 
   async index(pageFilterDto: PageFilterDto): Promise<User[]> {
-    console.log(pageFilterDto.page);
     const pageNumber: number = pageFilterDto.page * 5 - 5;
     const users = await this.createQueryBuilder('user')
       .leftJoinAndSelect('user.avatar', 'avatar')
@@ -76,7 +75,6 @@ export class UserRepository extends Repository<User> {
 
   async updateOne(id: number, updateUserDto: UserUpdateDto): Promise<User> {
     const user = await this.findOne(id);
-    // To Do .. file put clear old file taks on queue
     this.merge(user, updateUserDto);
     return await this.save(user);
   }

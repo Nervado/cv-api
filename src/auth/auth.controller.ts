@@ -21,6 +21,7 @@ export class AuthController {
     return this.authService.signUp(authSingUpDto);
   }
 
+  //@Roles('admin')
   @UseGuards(AuthGuard('local'))
   @Post('/signin')
   signIn(@Body(ValidationPipe) loginDto: LoginDto): Promise<CredentailsDto> {

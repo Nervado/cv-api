@@ -11,20 +11,18 @@ import {
   Put,
   Body,
   UseGuards,
-  // UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { User } from './models/user.entity';
 import { UserUpdateDto } from './dto/user-update.dto';
-import { GetUser } from 'src/auth/get-user.decorator';
+import { GetUser } from '../users/decorators/get-user.decorator';
 
-//import { AuthGuard } from '@nestjs/passport';
+import { Roles } from '../auth/decorators/roles.decorator';
+
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-
-//import { AuthGuard } from '../auth/auth.guard';
-// import { RolesGuard } from '../auth/roles.guard';
-
+import { RolesGuard } from '../auth/guards/roles-auth.guard';
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
   private logger = new Logger('UsersController');
@@ -32,19 +30,20 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
+  @Roles('ispro', 'admin', 'admin')
   @UseInterceptors(ClassSerializerInterceptor)
   getUsers(
     @Query(ValidationPipe) pageFilterDto: PageFilterDto,
+    @GetUser() user: User,
   ): Promise<User[]> {
-    this.logger.verbose(`User "${1212}" retrieving all users`);
+    this.logger.verbose(`User "${JSON.stringify(user)}" retrieving all users`);
     return this.usersService.index(pageFilterDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
   getUser(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
-    this.logger.verbose(`User ${user.userId} attempt to get profile data...`);
+    // this.logger.verbose(`User ${user.userId} attempt to get profile data...`);
     return this.usersService.get(id);
   }
 

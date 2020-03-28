@@ -3,5 +3,7 @@
 export class JwtPayload {
   userId?: number;
   username?: string;
-  // email?: string;
+  email?: string;
+  ispro?: boolean;
+  admin?: boolean;
 }

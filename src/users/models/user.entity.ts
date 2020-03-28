@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import { Avatar } from '../../avatars/models/avatar.entity';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
 
@@ -74,6 +74,11 @@ export class User extends BaseEntity {
   @OneToOne(() => Avatar, { eager: true })
   @JoinColumn()
   avatar: Avatar;
+
+  @Expose()
+  get fullname() {
+    return this.username + ' ' + this.surname;
+  }
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);
