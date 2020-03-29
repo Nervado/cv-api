@@ -15,7 +15,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev:db": "./src/scripts/start-db.sh",
-    "start:dev": "MODE_ENV=development nest start --watch",
+    "start:dev": "rm -rf dist && MODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -23,7 +23,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "dev": "tsc-watch --onSuccess=\"yarn copy\"",
+    "copy": "cp -r  ./src/emails/templates ./dist/emails/templates"
   },
   "dependencies": {
     "@akanass/nestjsx-crypto": "^1.0.0",
@@ -82,7 +84,8 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "ts"
+      "ts",
+      "hbs"
     ],
     "rootDir": "src",
     "testRegex": ".spec.ts$",
