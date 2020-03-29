@@ -1,0 +1,6 @@
+export enum EmailType {
+  FINANCIAL = 'FINANCIAL',
+  BUDGETS = 'BUDGETS',
+  COMPLAINT = 'COMPLAINT',
+  GENERAL = 'GENERAL',
+}
