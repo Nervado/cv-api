@@ -2,8 +2,9 @@
 doctype html
 - var url = 'https://www.reformadossonhos.com.br'
 html
-  include includes/head.pug
+
   body
+    include ./components/header.pug
     h1 My Site
     p  Welcome to my super lame site do #{name}.
     h1 fas fa-dollar-sign
@@ -11,5 +12,7 @@ html
     br
     button(class='button-signup') 
       a(class='url' href=url) Confirmar
-  include includes/foot.pug
+    include ./components/footer.pug
+
+
 
