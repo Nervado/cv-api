@@ -34,19 +34,28 @@ export class EmailConsumer {
         to: 'cvreformas@cvreformas.com.br', // list of receivers
         from: '<no-reply> system@cv.reformas.com.br', // sender address
         subject: 'Novo cliente', // Subject line
-        template: 'test', // The `.pug` or `.hbs` extension is appended automatically.
-
+        template: 'subscribe', // The `.pug` or `.hbs` extension is appended automatically.
+        /** 
+        attachments: [
+          {
+            filename: 'meetup.png',
+            path: __dirname + '/views/images/meetup.png',
+            cid: '../../images/meetup.png',
+          },
+        ], //same cid value as in the html
+        */
         context: {
           // Data to be sent to template engine.
-          admin: 'Evandro',
-          email: 'evandro@test.com',
-          name: 'John Forest Gump',
+          admin: 'Camila',
+          email: 'john_wick@gmail.com',
+          name: 'John Wick Neo',
           date: '4 de maio de 2020',
           code: 'cf1a3f828287',
           username: 'john doe',
           provider: 'Marriel. C.',
-          project: 'Reforma de sobrado',
+          project: 'Demolição da perimetral',
           ratting: '4.7 stars',
+          phonenumber: '21 972857728',
         },
       })
       .then(resp => {

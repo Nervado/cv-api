@@ -4,33 +4,26 @@ doctype html
 html
   head
     title Test | Email template!
-
     //- import css/scss stylesheets
     //- these file names will be replace by gulp with proper css file paths
-    link(rel="stylesheet" href="./styles/global.css")
-    link(rel="stylesheet" href="./styles/index/index.css")
-    link(rel="stylesheet" href="./styles/components/header.css")
-    link(rel="stylesheet" href="./styles/components/footer.css")
 
-    //- embdedded css allowed, but not sass
-    style.
-      .red{
-        background-color: #E84C50;
+    style
+      include ./styles/global.css
+      include ./styles/components/header.css
+      include ./styles/components/footer.css
+      include ./styles/subscribe/subscribe.css
 
-      }
-      .full-width{
-        width: 100%;
-      }
   body
-    include ./components/header.pug
     table.table(cellpadding="0" cellspacing="0")
       tr
-        td.red
-          h3(style="color: white;") Gulp &amp; Pug is awesome #{name} #{name}
-      tr
-
         td
-          a(href="/")
-            img.full-width(src="https://media.giphy.com/media/6o9Q2WehOHWI1QGO08/giphy.gif")
-    include ./components/footer.pug
+          h1(class="header") Templates disponíveis
+      tr
+        td
+          a(href="/subscribe.html") Subscribe email template
+      tr
+        td
+          a(href="/notification.html") Notification email template
+
+
 
