@@ -1,3 +1,5 @@
+![Node CI](https://github.com/Nervado/cv-api/workflows/Node%20CI/badge.svg?branch=master)
+
 # rules
 
 todo ....
