@@ -1,31 +1,26 @@
-name: tests
+# .github/workflows/nodejs.yml
+name: Node CI
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request] # Run on Push and Pull Requests
 
 jobs:
-  test:
-    name: Test on node ${{ matrix.node-version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  build:
+
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [10, 12]
-        os: [ubuntu-latest]
+        node-version: [8.x, 10.x, 12.x] 
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: volta-cli/action@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: install, build and test
-        run: |
-          yarn install
-          yarn lint
-          yarn build
-          yarn test --coverage
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
+    - name: yarn install, build, and test
+      run: |
+        yarn
+        yarn build
+        yarn test
