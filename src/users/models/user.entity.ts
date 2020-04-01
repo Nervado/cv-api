@@ -6,12 +6,14 @@ import {
   Unique,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import { Avatar } from '../../avatars/models/avatar.entity';
 import { Exclude, Expose } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
+import { Budget } from 'src/budgets/models/budget.entity';
 
 @Entity({ name: 'UserTable' })
 @Unique(['email'])
@@ -74,6 +76,13 @@ export class User extends BaseEntity {
   @OneToOne(() => Avatar, { eager: true })
   @JoinColumn()
   avatar: Avatar;
+
+  @OneToMany(
+    () => Budget,
+    budget => budget.user,
+  )
+  @JoinColumn()
+  budget: Budget;
 
   @Expose()
   get fullname() {

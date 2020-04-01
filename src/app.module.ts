@@ -12,6 +12,8 @@ import { AvatarsModule } from './avatars/avatars.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { EmailsModule } from './emails/emails.module';
 import { DocsModule } from './docs/docs.module';
+import { BudgetsModule } from './budgets/budgets.module';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { DocsModule } from './docs/docs.module';
     SchedulesModule,
     EmailsModule,
     DocsModule,
+    BudgetsModule,
+    PhotosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
