@@ -23,4 +23,4 @@ jobs:
       run: |
         yarn
         yarn build
-        yarn test --passWithNoTest
+        yarn test --passWithNoTests
