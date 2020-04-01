@@ -21,12 +21,6 @@ export class ConfigService {
   }
 
   public getEmailConfig() {
-    console.log(
-      'Exec from dir: ',
-      path.resolve(__dirname, '..', 'emails', 'views'),
-      path.resolve(__dirname, '..', 'emails', 'views', 'partials'),
-    );
-
     return {
       transport: {
         host: this.envConfig.MAIL_HOST,
@@ -66,6 +60,18 @@ export class ConfigService {
   public getServerUrl(): string {
     return this.envConfig.SERVER_URL;
   }
+  public getDocsPath(): string {
+    const baseDir = path.join(__dirname, '../../');
+    const _path = `${baseDir}${this.envConfig.DOCS_DIR}`;
+    return _path;
+  }
+
+  public getImagesPath(): string {
+    const baseDir = path.join(__dirname, '../../');
+    const _path = `${baseDir}${this.envConfig.IMAGES_DIR}`;
+    return _path;
+  }
+
   public getAvatarsPath(): string {
     const baseDir = path.join(__dirname, '../../');
     const _path = `${baseDir}${this.envConfig.AVATARS_DIR}`;

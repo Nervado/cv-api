@@ -18,6 +18,6 @@ export class AvatarsService {
     return this.avatarsRepo
       .check(filename)
       .then(() => res.sendFile(filename, { root: 'uploads/avatars' }))
-      .catch(() => res.status(404).json({ error: 'File not found' }));
+      .catch(() => res.status(404).json({ error: 'Avatar not found' }));
   }
 }
