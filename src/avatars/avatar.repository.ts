@@ -15,7 +15,7 @@ export class AvatarRepository extends Repository<Avatar> {
   async check(filename: string): Promise<any> {
     const result = await this.findOne({ where: { filename } });
     if (!result) {
-      throw new BadRequestException('File unavailable!');
+      throw new BadRequestException('Avatar unavailable!');
     }
     return result;
   }

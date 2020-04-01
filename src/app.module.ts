@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { AvatarsModule } from './avatars/avatars.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { EmailsModule } from './emails/emails.module';
+import { DocsModule } from './docs/docs.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { EmailsModule } from './emails/emails.module';
     AvatarsModule,
     SchedulesModule,
     EmailsModule,
+    DocsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
