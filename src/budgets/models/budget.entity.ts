@@ -12,9 +12,9 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import { User } from 'src/users/models/user.entity';
-import { Photo } from 'src/photos/models/photos.entity';
-import { Address } from 'src/address/models/address.entity';
+import { User } from '../../users/models/user.entity';
+import { Photo } from '../../photos/models/photos.entity';
+import { Address } from '../../address/models/address.entity';
 
 import { BudgetStatus } from '../enums/budget-status.enum';
 
