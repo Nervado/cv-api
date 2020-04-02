@@ -62,6 +62,12 @@ export class Budget extends BaseEntity {
   @Column()
   desirableTime: number;
 
+  @Column({ nullable: true })
+  possibleTime: number;
+
+  @Column({ nullable: true })
+  price: number;
+
   @ManyToOne(
     () => User,
     user => user.budget,
