@@ -5,7 +5,7 @@ import { BudgetStatus } from './enums/budget-status.enum';
 
 import { Logger, InternalServerErrorException } from '@nestjs/common';
 
-import { User } from 'src/users/models/user.entity';
+import { User } from '../users/models/user.entity';
 
 @EntityRepository(Budget)
 export class BudgetRepository extends Repository<BudgetDto> {
@@ -13,16 +13,14 @@ export class BudgetRepository extends Repository<BudgetDto> {
 
   async createBudget(budgetDto: BudgetDto, user?: User): Promise<Budget> {
     const budget = new Budget();
-
     budget.user = user;
-
     this.merge(budget, budgetDto);
 
     try {
       await budget.save();
     } catch (error) {
       this.logger.error(
-        `Failed to create a budget for user id: "${user}". Data: ${budgetDto}`,
+        `Failed to create a budget for user id: "${user.userId}". Data: ${budgetDto}`,
         error.stack,
       );
       throw new InternalServerErrorException();

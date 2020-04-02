@@ -3,8 +3,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { configService } from 'src/config/config.service';
 import { Exclude, Expose } from 'class-transformer';
@@ -22,7 +22,7 @@ export class Photo extends BaseEntity {
   @Column()
   path: string;
 
-  @OneToOne(
+  @OneToMany(
     () => Budget,
     budget => budget.photo,
   )

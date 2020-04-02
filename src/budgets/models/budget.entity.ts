@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 import { User } from 'src/users/models/user.entity';
@@ -61,7 +62,7 @@ export class Budget extends BaseEntity {
   @Column()
   desirableTime: number;
 
-  @OneToOne(
+  @ManyToOne(
     () => User,
     user => user.budget,
   )

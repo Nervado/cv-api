@@ -44,7 +44,12 @@ export class BudgetDto {
   @IsNumber()
   desirableTime: number;
 
-  user?: UserDto;
+  user?: {
+    username: string;
+    email: string;
+    surname: string;
+    phoneNumber: string;
+  };
 
   photo?: PhotoDto[];
 
