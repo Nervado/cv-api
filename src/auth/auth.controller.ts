@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/auth-login.dto';
 import { CredentailsDto } from './dto/auth-credentials.dto';
-import { UserDto } from 'src/users/dto/user-dto';
+import { UserDto } from '../users/dto/user-dto';
 
 @Controller('auth')
 export class AuthController {

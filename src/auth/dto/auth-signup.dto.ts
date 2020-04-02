@@ -1,9 +1,25 @@
-import { IsString, MinLength, MaxLength, Matches } from 'class-validator';
+import {
+  IsString,
+  MinLength,
+  MaxLength,
+  Matches,
+  IsOptional,
+} from 'class-validator';
 
 export class AuthSingUpDto {
   @IsString()
   @MaxLength(200)
   username: string;
+
+  @IsString()
+  @MaxLength(200)
+  @IsOptional()
+  surname?: string;
+
+  @IsString()
+  @MaxLength(200)
+  @IsOptional()
+  phoneNumber?: string;
 
   @IsString()
   @MaxLength(200)
@@ -21,7 +37,7 @@ export class AuthSingUpDto {
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'password too weak',
   })
-  password: string;
+  password?: string;
 
   @IsString()
   @MinLength(8)

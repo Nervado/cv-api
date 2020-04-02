@@ -13,12 +13,13 @@ import { Avatar } from '../../avatars/models/avatar.entity';
 import { Exclude, Expose } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
-import { Budget } from 'src/budgets/models/budget.entity';
+import { Budget } from '../../budgets/models/budget.entity';
+import { Address } from '../../address/models/address.entity';
 
 @Entity({ name: 'UserTable' })
 @Unique(['email'])
 @Unique(['cpf'])
-@Unique(['phonenumber'])
+@Unique(['phoneNumber'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   userId: number;
@@ -33,31 +34,10 @@ export class User extends BaseEntity {
   cpf: string;
 
   @Column({ nullable: true })
-  phonenumber: string;
+  phoneNumber: string;
 
   @Column()
   email: string;
-
-  @Column({ nullable: true })
-  street: string;
-
-  @Column({ nullable: true })
-  housenumber: string;
-
-  @Column({ nullable: true })
-  complement: string;
-
-  @Column({ nullable: true })
-  neibehoord: string;
-
-  @Column({ nullable: true })
-  city: string;
-
-  @Column({ nullable: true })
-  uf: string;
-
-  @Column({ nullable: true })
-  cep: string;
 
   @Column()
   admin: boolean;
@@ -77,12 +57,16 @@ export class User extends BaseEntity {
   @JoinColumn()
   avatar: Avatar;
 
+  @OneToOne(() => Address, { eager: true })
+  @JoinColumn()
+  adress: Address;
+
   @OneToMany(
     () => Budget,
     budget => budget.user,
   )
   @JoinColumn()
-  budget: Budget;
+  budget: Budget[];
 
   @Expose()
   get fullname() {

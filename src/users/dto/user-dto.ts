@@ -1,18 +1,15 @@
+import { AddressDto } from 'src/address/dto/adress.dto';
+import { AvatarDto } from 'src/avatars/dto/avatar.dto';
+
 export class UserDto {
   userId?: number;
-  username: string;
-  surname: string;
-  street: string;
-  cpf: string;
-  phonenumber: string;
   email: string;
-  housenumber: string;
-  complement: string;
-  neibehoord: string;
-  city: string;
-  uf: string;
-  cep: string;
-  admin: boolean;
-  ispro: boolean;
-  fullname: string;
+  username: string;
+  phoneNumber?: string;
+  surname?: string;
+  fullname?: string;
+  address?: AddressDto;
+  avatar?: AvatarDto;
+  isdmin?: boolean;
+  ispro?: boolean;
 }

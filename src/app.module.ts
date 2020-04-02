@@ -14,6 +14,7 @@ import { EmailsModule } from './emails/emails.module';
 import { DocsModule } from './docs/docs.module';
 import { BudgetsModule } from './budgets/budgets.module';
 import { PhotosModule } from './photos/photos.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PhotosModule } from './photos/photos.module';
     DocsModule,
     BudgetsModule,
     PhotosModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],

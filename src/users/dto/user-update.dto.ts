@@ -1,17 +1,9 @@
 import { AvatarDto } from 'src/avatars/dto/avatar.dto';
+import { AddressDto } from 'src/address/dto/adress.dto';
 
 export class UserUpdateDto {
   username?: string;
   surname?: string;
-  street?: string;
-  cpf?: string;
-  phonenumber?: string;
-  email?: string;
-  housenumber?: string;
-  complement?: string;
-  neibehoord?: string;
-  city?: string;
-  uf?: string;
-  cep?: string;
+  adress?: AddressDto;
   avatar?: AvatarDto;
 }

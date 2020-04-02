@@ -13,6 +13,9 @@ import {
 
 import { User } from 'src/users/models/user.entity';
 import { Photo } from 'src/photos/models/photos.entity';
+import { Address } from 'src/address/models/address.entity';
+
+import { BudgetStatus } from '../enums/budget-status.enum';
 
 @Entity({ name: 'BudgetTable' })
 export class Budget extends BaseEntity {
@@ -28,17 +31,32 @@ export class Budget extends BaseEntity {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   height: number;
 
-  @Column()
+  @Column({ nullable: true })
   widht: number;
 
-  @Column()
-  depth: number;
+  @Column({ nullable: true })
+  deepness: number;
 
-  @Column()
-  numberOfLors: number;
+  @Column({ nullable: true })
+  numberOfRooms: number;
+
+  @Column({ nullable: true })
+  numberOflights: number;
+
+  @Column({ nullable: true })
+  numberOfWalls: number;
+
+  @Column({ nullable: true })
+  numberOfFloors: number;
+
+  @Column({ nullable: true })
+  numberOfDoors: number;
+
+  @Column({ nullable: true })
+  numberOfWindows: number;
 
   @Column()
   desirableTime: number;
@@ -55,7 +73,18 @@ export class Budget extends BaseEntity {
     photo => photo.budget,
   )
   @JoinColumn()
-  photo: Photo;
+  photo: Photo[];
+
+  @OneToOne(() => Address)
+  @JoinColumn()
+  address: Address;
+
+  @Column({
+    type: 'enum',
+    enum: BudgetStatus,
+    default: BudgetStatus.NEW,
+  })
+  status: BudgetStatus;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -10,11 +10,10 @@ import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
 import { LoginDto } from '../auth/dto/auth-login.dto';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
-import { UserDto } from './dto/user-dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authSingUpDto: AuthSingUpDto): Promise<UserDto> {
+  async signUp(authSingUpDto: AuthSingUpDto): Promise<User> {
     const { email, password, username, passwordConfirmation } = authSingUpDto;
 
     if (!(passwordConfirmation && passwordConfirmation === password)) {
@@ -43,9 +42,8 @@ export class UserRepository extends Repository<User> {
 
   async validateUser(loginDto: LoginDto): Promise<any> {
     const { username, password } = loginDto;
-    console.log(loginDto, 'Dados buscados');
 
-    const user = await this.findOne({
+    const user = await User.findOne({
       where: { email: username },
     });
 

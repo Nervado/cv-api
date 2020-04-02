@@ -6,7 +6,7 @@ import { JwtPayload } from './jwt-payload.interface';
 import { CredentailsDto } from './dto/auth-credentials.dto';
 
 import { UsersService } from '../users/users.service';
-import { UserDto } from 'src/users/dto/user-dto';
+import { UserDto } from '../users/dto/user-dto';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +40,7 @@ export class AuthService {
     const authCredentailsDto = new CredentailsDto();
 
     authCredentailsDto.token = accessToken;
-    authCredentailsDto.user = user;
+    authCredentailsDto.user = { username, userId, ispro, admin, email };
 
     return authCredentailsDto;
   }

@@ -22,6 +22,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles-auth.guard';
+
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
@@ -30,7 +31,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  @Roles('ispro', 'admin', 'admin')
+  @Roles('admin')
   @UseInterceptors(ClassSerializerInterceptor)
   getUsers(
     @Query(ValidationPipe) pageFilterDto: PageFilterDto,

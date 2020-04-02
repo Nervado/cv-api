@@ -1,6 +1,5 @@
-import { UserDto } from '../../users/dto/user-dto';
-
+import { InfoToken } from './info-token.dto';
 export class CredentailsDto {
-  user: UserDto;
+  user: InfoToken;
   token: string;
 }

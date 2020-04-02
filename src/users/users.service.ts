@@ -4,10 +4,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PageFilterDto } from './dto/page-filter.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
 import { User } from './models/user.entity';
-import { AuthSingUpDto } from 'src/auth/dto/auth-signup.dto';
-import { LoginDto } from 'src/auth/dto/auth-login.dto';
+import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
+import { LoginDto } from '../auth/dto/auth-login.dto';
 import { EmailsService } from '../emails/emails.service';
-import { UserDto } from './dto/user-dto';
 
 @Injectable()
 export class UsersService {
@@ -20,16 +19,16 @@ export class UsersService {
     return this.userRepository.index(pageFilterDto);
   }
 
-  get(id) {
+  async get(id): Promise<User> {
     return this.userRepository.findOne(id);
   }
 
   async update(id: number, userUpdateDto: UserUpdateDto): Promise<User> {
     // TODO ... check if avatar exists
-    return this.userRepository.updateOne(id, userUpdateDto);
+    return await this.userRepository.updateOne(id, userUpdateDto);
   }
 
-  async signUp(authSingUpDto: AuthSingUpDto): Promise<UserDto> {
+  async signUp(authSingUpDto: AuthSingUpDto): Promise<User> {
     const newuser = await this.userRepository.signUp(authSingUpDto);
     newuser && (await this.emailsService.sendEmail(authSingUpDto));
     return newuser;
@@ -37,5 +36,9 @@ export class UsersService {
 
   async validateUser(loginDto: LoginDto): Promise<User> {
     return this.userRepository.validateUser(loginDto);
+  }
+
+  async findOne(email: string): Promise<User> {
+    return this.userRepository.findOne({ where: { email } });
   }
 }

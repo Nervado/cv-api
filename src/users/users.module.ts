@@ -3,14 +3,14 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
-import { AuthModule } from 'src/auth/auth.module';
-import { EmailsModule } from 'src/emails/emails.module';
+import { AuthModule } from '../auth/auth.module';
+import { EmailsModule } from '../emails/emails.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([UserRepository]),
     EmailsModule,
     AuthModule,
-    TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [UsersController],
   providers: [UsersService],

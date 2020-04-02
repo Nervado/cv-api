@@ -1,3 +1,5 @@
+/**
+
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 import MigrationUtil from '../../util/migrationUtil';
@@ -35,3 +37,6 @@ export class CreateUserTable1584290025856 implements MigrationInterface {
     await queryRunner.dropTable(CreateUserTable1584290025856.table);
   }
 }
+
+
+ */
