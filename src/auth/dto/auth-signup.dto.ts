@@ -4,25 +4,32 @@ import {
   MaxLength,
   Matches,
   IsOptional,
+  IsNotEmpty,
+  IsPhoneNumber,
 } from 'class-validator';
 
 export class AuthSingUpDto {
   @IsString()
   @MaxLength(200)
+  @MinLength(2)
+  @IsNotEmpty()
   username: string;
 
   @IsString()
   @MaxLength(200)
   @IsOptional()
-  surname?: string;
+  surname: string;
 
   @IsString()
   @MaxLength(200)
   @IsOptional()
-  phoneNumber?: string;
+  @IsPhoneNumber('BR')
+  phoneNumber: string;
 
   @IsString()
+  @MaxLength(5)
   @MaxLength(200)
+  @IsNotEmpty()
   @Matches(
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     {
@@ -48,7 +55,7 @@ export class AuthSingUpDto {
   passwordConfirmation?: string;
 
   avatar?: {
-    avatarId: string;
+    avatarId: number;
     url: string;
     path: string;
   };

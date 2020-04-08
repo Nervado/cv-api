@@ -1,4 +1,13 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Req,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  ValidationPipe,
+} from '@nestjs/common';
 import { BudgetDto } from './dto/budget.dto';
 import { User } from '../users/models/user.entity';
 import { GetUser } from '../users/decorators/get-user.decorator';
@@ -20,7 +29,12 @@ export class BudgetsController {
   }
 
   @Post('promo')
-  async createPromoBudget(@Body() budget: BudgetDto): Promise<Budget> {
+  @UseInterceptors(ClassSerializerInterceptor)
+  async createPromoBudget(
+    @Body(ValidationPipe) budget: BudgetDto,
+    @Req() req,
+  ): Promise<Budget> {
+    console.log(budget, req.headers);
     return this.budgestService.createBudget(budget);
   }
 }

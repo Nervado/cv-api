@@ -20,6 +20,15 @@ export class ConfigService {
     this.envConfig = this.validateInput(config);
   }
 
+  public getEmailReceivers() {
+    return {
+      general: this.envConfig.MAIL_GENERAL,
+      ceo: this.envConfig.MAIL_CEO,
+      cfo: this.envConfig.MAIL_CFO,
+      coo: this.envConfig.MAIL_COO,
+    };
+  }
+
   public getEmailConfig() {
     return {
       transport: {

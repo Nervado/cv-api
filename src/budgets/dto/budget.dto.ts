@@ -1,57 +1,69 @@
-import { UserDto } from 'src/users/dto/user-dto';
+import { AuthSingUpDto } from '../../auth/dto/auth-signup.dto';
 import { PhotoDto } from 'src/photos/dto/photo.dto';
 import { AddressDto } from 'src/address/dto/adress.dto';
 
-import { IsString, IsNumber } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsNotEmpty,
+  ValidateNested,
+  IsDateString,
+  IsOptional,
+} from 'class-validator';
 
 export class BudgetDto {
   @IsString()
-  title: string;
-
-  @IsString()
+  @IsNotEmpty()
   category: string;
 
+  @IsNotEmpty()
   @IsString()
   description: string;
 
   @IsNumber()
+  @IsOptional()
   height: number;
 
   @IsNumber()
-  widht: number;
+  @IsOptional()
+  width: number;
 
   @IsNumber()
+  @IsOptional()
   deepness: number;
 
   @IsNumber()
+  @IsOptional()
   numberOfRooms: number;
 
   @IsNumber()
+  @IsOptional()
   numberOflights: number;
 
   @IsNumber()
+  @IsOptional()
   numberOfWalls: number;
 
   @IsNumber()
+  @IsOptional()
   numberOfFloors: number;
 
   @IsNumber()
+  @IsOptional()
   numberOfDoors: number;
 
   @IsNumber()
+  @IsOptional()
   numberOfWindows: number;
 
-  @IsNumber()
-  desirableTime: number;
+  @IsNotEmpty()
+  @IsDateString()
+  desirableTime: Date;
 
-  user?: {
-    username: string;
-    email: string;
-    surname: string;
-    phoneNumber: string;
-  };
+  @ValidateNested()
+  user: AuthSingUpDto;
 
-  photo?: PhotoDto[];
-
+  photo: PhotoDto[];
+  @ValidateNested()
   address: AddressDto;
 }

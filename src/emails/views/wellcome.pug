@@ -11,7 +11,7 @@ html
         include ./styles/global.css
         include ./styles/components/header.css
         include ./styles/components/footer.css
-        include ./styles/pages/subscribe.css
+        include ./styles/pages/wellcome.css
 
   body
     table.table(cellpadding="0" cellspacing="0" )
@@ -19,30 +19,32 @@ html
         td
           include ./components/header.pug   
       tr
-        td          
+        td  
           p(class='gret') Ola, 
-          if data.admin 
-            p(class='admin') #{data.admin}
+            p(class='admin') #{data.username}
       tr
         td
-          p Um novo cliente acaba de se cadastrar em nossa plataforma.  
-      tr  
-        td
-          <p> O cliente 
-            <strong>#{data.username}</strong> recebeu um link para confirmação de cadastro no endereço 
-            <strong>#{data.email}</strong>. 
-          </p>
-          br
+          p Bem vindo a C&amp;V Reformas e Construções! 
       tr
         td
-          if data.phoneNumber
-            p Se necessário entre em contato com o cliente pelo número 
-              p(class='enfase') #{data.phoneNumber}   
+          p Fique a vontade para nos enviar seus pedidos !    
+
+      tr
+        td
+          p Seu nome de usuário é: <p class='enfase'>#{data.email}</p>
+      tr
+        td
+          p Sua senha provisória é: <p class='enfase'>#{data.password}</p>
+
+      tr
+        td
+          p Por favor click no link abaixo para acessar sua área pessoal e atualizar sua senha!
+
       tr 
         td
           p 
             button 
-              a(href="https://reformadossonhos.com.br/dashboard") C&amp;V Reformas e Construções  
+              a(href="https://reformadossonhos.com.br/signin") Confirmar meu cadastro 
       include ./components/footer.pug    
 
 

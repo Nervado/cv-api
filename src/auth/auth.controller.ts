@@ -20,14 +20,15 @@ export class AuthController {
 
   @Post('/signup')
   @UseInterceptors(ClassSerializerInterceptor)
-  signUp(@Body(ValidationPipe) authSingUpDto: AuthSingUpDto): Promise<UserDto> {
+  signUp(@Body() authSingUpDto: AuthSingUpDto): Promise<UserDto> {
     return this.authService.signUp(authSingUpDto);
   }
 
   @Post('/signin')
   @UseGuards(AuthGuard('local'))
   @UseInterceptors(ClassSerializerInterceptor)
-  signIn(@Body(ValidationPipe) loginDto: LoginDto): Promise<CredentailsDto> {
+  signIn(@Body() loginDto: LoginDto): Promise<CredentailsDto> {
+    console.log(loginDto);
     return this.authService.signIn(loginDto);
   }
 }

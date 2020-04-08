@@ -14,7 +14,14 @@ import { UserUpdateDto } from './dto/user-update.dto';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async signUp(authSingUpDto: AuthSingUpDto): Promise<User> {
-    const { email, password, username, passwordConfirmation } = authSingUpDto;
+    const {
+      email,
+      password,
+      username,
+      passwordConfirmation,
+      phoneNumber,
+      surname,
+    } = authSingUpDto;
 
     if (!(passwordConfirmation && passwordConfirmation === password)) {
       throw new BadRequestException('Passwords dont match');
@@ -23,6 +30,8 @@ export class UserRepository extends Repository<User> {
     const user = new User();
     user.username = username;
     user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.surname = surname;
     user.ispro = false;
     user.admin = false;
 
@@ -40,20 +49,24 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async validateUser(loginDto: LoginDto): Promise<any> {
+  async validateUser(loginDto: any): Promise<any> {
     const { username, password } = loginDto;
 
-    const user = await User.findOne({
-      where: { email: username },
-    });
+    try {
+      const user = await this.findOne({
+        where: { email: username },
+      });
 
-    console.log('deu ruim mano ahsahs', loginDto);
+      console.log(user);
 
-    if (user && user.validatePassword(password)) {
-      return user;
+      if (user && (await user.validatePassword(password))) {
+        return user;
+      }
+
+      return null;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
     }
-
-    return null;
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {

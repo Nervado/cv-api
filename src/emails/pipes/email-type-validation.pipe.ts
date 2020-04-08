@@ -1,17 +1,18 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { EmailType } from '../enums/email-type';
+import { EmailTopic } from '../enums/email-topic';
 
 export class EmailTypeValidationPipe implements PipeTransform {
   readonly allowedTypes = [
-    EmailType.BUDGETS,
-    EmailType.COMPLAINT,
-    EmailType.FINANCIAL,
-    EmailType.GENERAL,
+    EmailTopic.BUDGETS,
+    EmailTopic.COMPLAINT,
+    EmailTopic.FINANCIAL,
+    EmailTopic.GENERAL,
   ];
 
   transform(value: any) {
     const data = value;
     value = value.type.toUpperCase();
+    console.log(value);
 
     if (!this.isStatusValid(value)) {
       throw new BadRequestException(`"${value}" is an invalid type`);

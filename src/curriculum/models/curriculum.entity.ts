@@ -16,10 +16,10 @@ import { User } from '../../users/models/user.entity';
 import { Photo } from '../../photos/models/photos.entity';
 import { Address } from '../../address/models/address.entity';
 
-import { BudgetStatus } from '../enums/budget-status.enum';
+// import { BudgetStatus } from '../enums/budget-status.enum';
 
-@Entity({ name: 'BudgetTable' })
-export class Budget extends BaseEntity {
+@Entity({ name: 'CurriculumTable' })
+export class Curriculum extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -83,12 +83,14 @@ export class Budget extends BaseEntity {
   @JoinColumn()
   address: Address;
 
-  @Column({
+  /**
+   *   @Column({
     type: 'enum',
     enum: BudgetStatus,
     default: BudgetStatus.NEW,
   })
   status: BudgetStatus;
+   */
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

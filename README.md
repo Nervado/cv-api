@@ -5,6 +5,6 @@
 todo ....
 
 queue...almost there ok
-email...almost there
+email...almost there templates
 notifications
 filter files

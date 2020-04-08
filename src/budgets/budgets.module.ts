@@ -5,6 +5,7 @@ import { BudgetsService } from './budgets.service';
 import { UsersModule } from '../users/users.module';
 import { BudgetRepository } from './budgets.repository';
 import { EmailsModule } from '../emails/emails.module';
+import { AddressService } from '../address/address.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { EmailsModule } from '../emails/emails.module';
     EmailsModule,
   ],
   controllers: [BudgetsController],
-  providers: [BudgetsService],
+  providers: [BudgetsService, AddressService],
   exports: [BudgetsService],
 })
 export class BudgetsModule {}

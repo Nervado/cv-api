@@ -5,8 +5,9 @@ import { PageFilterDto } from './dto/page-filter.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
 import { User } from './models/user.entity';
 import { AuthSingUpDto } from '../auth/dto/auth-signup.dto';
-import { LoginDto } from '../auth/dto/auth-login.dto';
 import { EmailsService } from '../emails/emails.service';
+import { EmailTypes } from '../emails/enums/email-types';
+import { EmailsGroups } from '../emails/enums/emails-groups';
 
 @Injectable()
 export class UsersService {
@@ -30,11 +31,21 @@ export class UsersService {
 
   async signUp(authSingUpDto: AuthSingUpDto): Promise<User> {
     const newuser = await this.userRepository.signUp(authSingUpDto);
-    newuser && (await this.emailsService.sendEmail(authSingUpDto));
+    newuser &&
+      (await this.emailsService.sendEmail(
+        authSingUpDto,
+        EmailTypes.WELLCOME,
+        EmailsGroups.CLIENTS,
+      )) &&
+      (await this.emailsService.sendEmail(
+        authSingUpDto,
+        EmailTypes.SUBSCRIBE,
+        EmailsGroups.ADMINS,
+      ));
     return newuser;
   }
 
-  async validateUser(loginDto: LoginDto): Promise<User> {
+  async validateUser(loginDto: any): Promise<User> {
     return this.userRepository.validateUser(loginDto);
   }
 

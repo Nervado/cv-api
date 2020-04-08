@@ -26,6 +26,13 @@ export class AvatarsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseInterceptors(
     FileInterceptor('avatar', {
+      fileFilter: (req, file, callback) => {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+          return callback(null, false);
+        }
+        return callback(null, true);
+      },
+      limits: { fileSize: 2000000 },
       storage: diskStorage({
         destination: configService.getAvatarsPath(),
         filename: (req, file, cb) => {

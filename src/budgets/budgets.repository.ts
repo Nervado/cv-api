@@ -1,7 +1,7 @@
 import { Budget } from './models/budget.entity';
 import { EntityRepository, Repository } from 'typeorm';
+import { Address } from '../address/models/address.entity';
 import { BudgetDto } from './dto/budget.dto';
-import { BudgetStatus } from './enums/budget-status.enum';
 
 import { Logger, InternalServerErrorException } from '@nestjs/common';
 
@@ -11,9 +11,16 @@ import { User } from '../users/models/user.entity';
 export class BudgetRepository extends Repository<BudgetDto> {
   private logger = new Logger('BudgetRepository');
 
-  async createBudget(budgetDto: BudgetDto, user?: User): Promise<Budget> {
+  async createBudget(
+    budgetDto: BudgetDto,
+    user?: User,
+    address?: Address,
+  ): Promise<Budget> {
     const budget = new Budget();
+
     budget.user = user;
+    budget.address = address;
+
     this.merge(budget, budgetDto);
 
     try {

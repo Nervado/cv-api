@@ -1,4 +1,4 @@
-export enum EmailType {
+export enum EmailTopic {
   FINANCIAL = 'FINANCIAL',
   BUDGETS = 'BUDGETS',
   COMPLAINT = 'COMPLAINT',

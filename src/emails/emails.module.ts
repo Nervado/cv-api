@@ -6,8 +6,6 @@ import { configService } from '../config/config.service';
 import { EmailsService } from './emails.service';
 import { EmailConsumer } from './email.consumer';
 import { EmailsController } from './emails.controller';
-import path = require('path');
-// import { HandlebarsAdapter, } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [

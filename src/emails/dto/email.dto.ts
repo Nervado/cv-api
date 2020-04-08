@@ -7,7 +7,7 @@ import {
   IsIn,
 } from 'class-validator';
 
-import { EmailType } from '../enums/email-type';
+import { EmailTopic } from '../enums/email-topic';
 
 export class EmailDto {
   @IsNotEmpty()
@@ -21,13 +21,7 @@ export class EmailDto {
   @IsPhoneNumber('BR')
   phonenumber: string;
 
-  @IsIn([
-    EmailType.BUDGETS,
-    EmailType.FINANCIAL,
-    EmailType.GENERAL,
-    EmailType.COMPLAINT,
-  ])
-  type: EmailType;
+  type: EmailTopic;
 
   @IsNotEmpty()
   @IsString()

@@ -1,11 +1,31 @@
+import { IsString, IsNotEmpty } from 'class-validator';
+
 export class AddressDto {
-  street?: string;
-  cpf?: string;
-  phonenumber?: string;
-  housenumber?: string;
-  complement?: string;
-  neibehoord?: string;
-  city?: string;
-  uf?: string;
-  cep?: string;
+  @IsString()
+  @IsNotEmpty()
+  streetName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  houseNumber: string;
+
+  @IsString()
+  @IsNotEmpty()
+  complement: string;
+
+  @IsString()
+  @IsNotEmpty()
+  neighborhood: string;
+
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @IsString()
+  @IsNotEmpty()
+  fu: string;
+
+  @IsString()
+  @IsNotEmpty()
+  cep: string;
 }
